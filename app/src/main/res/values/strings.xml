@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Mobin Safaeian</string>
+    <string name="kotlin">Kotlin</string>
+    <string name="head_transtion_name">head_name_transtion</string>
+    <string name="empty">...</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.android.mobinsafaeian.detfhappinesspeyk.model.Pojo
+package com.android.mobinsafaeian.detfhappinesspeyk.model.Pojo.IPPojos
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

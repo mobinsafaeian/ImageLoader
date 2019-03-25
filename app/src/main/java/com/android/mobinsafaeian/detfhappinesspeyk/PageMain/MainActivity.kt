@@ -11,8 +11,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() , MainViewInterface{
 
+    //definitions
     private lateinit var fragment: MainFragment
     private lateinit var presenter: MainPresenter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -68,10 +71,10 @@ class MainActivity : BaseActivity() , MainViewInterface{
     /**
      * when app is in onPause mode , we should call the unbind() method to dispose disposable variable
      */
-    override fun onPause() {
+    /*override fun onPause() {
         super.onPause()
         presenter.unbind()
-    }
+    }*/
 
     // show a simple exit dialog when user clicks on backPressedButton
     override fun onBackPressed() {

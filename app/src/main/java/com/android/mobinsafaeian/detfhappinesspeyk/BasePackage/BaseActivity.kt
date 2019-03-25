@@ -18,7 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //because i did'nt enable transition in my theme , i need to write this code to enable enter & exit transition
+        //because i did'nt enable transition mode in my theme , i need to write this code to enable enter & exit transition
         with(window){
             requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
 

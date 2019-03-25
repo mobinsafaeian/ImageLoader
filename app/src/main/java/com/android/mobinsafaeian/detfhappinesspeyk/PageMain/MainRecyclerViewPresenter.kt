@@ -1,8 +1,7 @@
 package com.android.mobinsafaeian.detfhappinesspeyk.PageMain
 
 
-import android.util.Log
-import com.android.mobinsafaeian.detfhappinesspeyk.model.Pojo.MainDataPojos.AllImagesResponse
+
 import com.android.mobinsafaeian.detfhappinesspeyk.model.connections.BaseUrls
 import com.android.mobinsafaeian.detfhappinesspeyk.model.connections.RetrofitBuilder
 import com.android.mobinsafaeian.detfhappinesspeyk.model.data.MainRecyclerViewListItem

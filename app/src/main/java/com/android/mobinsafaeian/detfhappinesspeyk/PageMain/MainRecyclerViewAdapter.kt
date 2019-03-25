@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.mobinsafaeian.detfhappinesspeyk.R
+import com.android.mobinsafaeian.detfhappinesspeyk.customizations.BlurTransformations
 import com.android.mobinsafaeian.detfhappinesspeyk.model.data.MainRecyclerViewListItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.main_recycler_view_item.view.*
@@ -23,7 +24,7 @@ class MainRecyclerViewAdapter(private var context: Context? , private var listIt
 
     override fun onBindViewHolder(holder: MainRecyclerViewAdapter.MyViewHolder, position: Int) {
         item = listItems[position]
-        Picasso.with(context).load(item.imageItem).fit().into(holder.imageItem)
+        Picasso.with(context).load(item.imageItem).fit().transform(BlurTransformations(context , 12f)).into(holder.imageItem)
     }
 
     class MyViewHolder(view:View): RecyclerView.ViewHolder(view){

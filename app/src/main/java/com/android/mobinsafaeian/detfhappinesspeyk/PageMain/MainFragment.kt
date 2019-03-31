@@ -1,6 +1,8 @@
 package com.android.mobinsafaeian.detfhappinesspeyk.PageMain
 
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import com.android.mobinsafaeian.detfhappinesspeyk.BasePackage.NetworkChecking
 import com.android.mobinsafaeian.detfhappinesspeyk.R
 import com.android.mobinsafaeian.detfhappinesspeyk.model.Pojo.MainDataPojos.DataResponse
 import com.android.mobinsafaeian.detfhappinesspeyk.model.data.MainRecyclerViewListItem
+import com.android.mobinsafaeian.detfhappinesspeyk.model.database.ImageInfo
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() , MainRecyclerViewItemViewInterface {
@@ -47,23 +50,47 @@ class MainFragment : Fragment() , MainRecyclerViewItemViewInterface {
         listItems = ArrayList()
         main_recycler_view.layoutManager = LinearLayoutManager(context)
         presenter = MainRecyclerViewPresenter(this)
-        networkChecking = NetworkChecking(context!! , presenter)
-        adapter = MainRecyclerViewAdapter(context , listItems)
+        adapter = MainRecyclerViewAdapter(context , listItems , presenter)
         main_recycler_view.adapter = adapter
+        networkChecking = NetworkChecking(context!! , presenter , adapter)
     }
 
     /**
-     * if the response of retrieving data was correct and successful , this function will be called to pass parse data and pass them to adapter
+     * if the response of retrieving data was correct and successful ,
+     * this function will be called to pass parse data and pass them to adapter
      */
-    override fun setImage(data:DataResponse) {
+    override fun setImagesFromServer(data: DataResponse) {
+        listItems.clear()
         for(i in 0 until data.query.allimages.size){
-            listItems.add(MainRecyclerViewListItem(data.query.allimages[i].url))
+            listItems.add(MainRecyclerViewListItem(data.query.allimages[i].url ,
+                data.query.allimages[i].name ,
+                data.query.allimages[i].timestamp))
         }
         adapter.notifyDataSetChanged()
     }
 
     /**
-     * if the response of retrieving data faced with a problem , this function will be called to log the error
+     * if the retrieving data from server was impossible ,
+     * this function will be called to pass data that loaded from database and pass them to adapter
+     */
+    override fun setImagesFromDatabase(data: List<ImageInfo>) {
+        listItems.clear()
+        for (i in 0 until data.size){
+            listItems.add(MainRecyclerViewListItem(data[i].image , data[i].name , data[i].timeStamp))
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    /**
+     * this function converts byteArray to bitmap
+     */
+    private fun getBitmapFromByteArray(bytes: ByteArray): Bitmap {
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    }
+
+    /**
+     * if the response of retrieving data faced with a problem ,
+     * this function will be called to log the error
      */
     override fun showError(message: String?) {
         Log.i("error message" , message)

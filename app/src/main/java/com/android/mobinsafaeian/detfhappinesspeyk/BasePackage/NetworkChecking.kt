@@ -5,27 +5,36 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.android.mobinsafaeian.detfhappinesspeyk.PageMain.MainRecyclerViewAdapter
 import com.android.mobinsafaeian.detfhappinesspeyk.PageMain.MainRecyclerViewPresenter
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 
 
-class NetworkChecking(private val context: Context, private val presenter:MainRecyclerViewPresenter) : BroadcastReceiver() {
+class NetworkChecking(private val context: Context, private val presenter:MainRecyclerViewPresenter , private val adapter:MainRecyclerViewAdapter) : BroadcastReceiver() {
 
+    private var disposable:Disposable? = null
 
     override fun onReceive(p0: Context?, p1: Intent?) {
-        hasInternetConnection().subscribe { hasInternet ->
+        disposable = hasInternetConnection().subscribe { hasInternet ->
             if (hasInternet){
                 Toast.makeText(context , "successful connection:D" , Toast.LENGTH_SHORT).show()
+                presenter.deleteAllDataFromDatabase()
+                adapter.removeItem()
                 presenter.getAllDataFromServer()
             }
-            else Toast.makeText(context , "connection problem..." , Toast.LENGTH_SHORT).show()
+            else {
+                Toast.makeText(context , "connection problem..." , Toast.LENGTH_SHORT).show()
+                adapter.removeItem()
+                presenter.getAllDataFromDatabase()
+            }
         }
     }
 
@@ -47,6 +56,10 @@ class NetworkChecking(private val context: Context, private val presenter:MainRe
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun onBind(){
+        disposable!!.dispose()
     }
 
 }

@@ -9,7 +9,7 @@ import com.android.mobinsafaeian.detfhappinesspeyk.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity() , MainViewInterface{
+class MainActivity : BaseActivity(), MainViewInterface {
 
     //definitions
     private lateinit var fragment: MainFragment
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() , MainViewInterface{
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_fragment_container , fragment)
+            .replace(R.id.main_fragment_container, fragment)
             .commit()
     }
 
@@ -65,7 +65,10 @@ class MainActivity : BaseActivity() , MainViewInterface{
      * @param message is the error message that should be shown
      */
     override fun showError(message: String) {
-       SimpleDialog("Error" , message)
+        ip_progress_bar.visibility = View.GONE
+        ip_text.visibility = View.VISIBLE
+        ip_text.text = "..."
+        SimpleDialog("Error", message)
     }
 
     /**
@@ -78,6 +81,6 @@ class MainActivity : BaseActivity() , MainViewInterface{
 
     // show a simple exit dialog when user clicks on backPressedButton
     override fun onBackPressed() {
-        ExitDialog("Exit" , "Do you want to exit?" , "yes" , "no")
+        exitDialog("Exit", "Do you want to exit?", "yes", "no")
     }
 }

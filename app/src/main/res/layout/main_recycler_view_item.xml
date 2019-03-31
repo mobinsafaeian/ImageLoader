@@ -4,13 +4,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_margin="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="8dp"
     android:elevation="4dp"
-    android:layout_height="140dp"
+    android:layout_height="380dp"
     app:cardElevation="4dp"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="40dp">
     <ImageView
         android:id="@+id/main_recycler_view_image_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        app:borderWidth="0dp"
+        android:elevation="6dp"
+        app:fabSize="normal"
+        android:src="@drawable/ic_download"
+    />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="50dp"
+        android:backgroundTint="@android:color/white"
+        app:borderWidth="0dp"
+        android:elevation="2dp"
+        app:fabSize="mini"
+        android:padding="4dp"
+        android:src="@drawable/ic_delete"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="55dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="@android:color/white"
+        app:borderWidth="0dp"
+        android:elevation="2dp"
+        app:fabSize="mini"
+        android:padding="4dp"
+        android:src="@drawable/ic_more"
+        />
+    
 </androidx.cardview.widget.CardView>

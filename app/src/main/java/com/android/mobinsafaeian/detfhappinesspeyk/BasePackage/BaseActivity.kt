@@ -38,7 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
     //show an exit dialog
-    protected fun ExitDialog(title:String , message:String , positiveMessage:String , negativeMessage:String){
+    protected fun exitDialog(title:String, message:String, positiveMessage:String, negativeMessage:String){
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)

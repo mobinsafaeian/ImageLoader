@@ -1,3 +1,5 @@
 package com.android.mobinsafaeian.detfhappinesspeyk.model.data
 
-class MainRecyclerViewListItem(var imageItem:String)
+import android.graphics.Bitmap
+
+class MainRecyclerViewListItem(var imageItem:Any , var name:String , var timeStamp:String)

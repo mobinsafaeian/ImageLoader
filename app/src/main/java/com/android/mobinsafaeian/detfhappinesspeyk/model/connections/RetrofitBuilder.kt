@@ -7,9 +7,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitBuilder {
     companion object {
+        object RetrofitObj{
+            lateinit var retrofit:Retrofit
+        }
         fun create(BASE_URL:String): GetApisInterface {
 
-            val retrofit = Retrofit.Builder()
+            RetrofitObj.retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(
                     RxJava2CallAdapterFactory.create())
                 .addConverterFactory(
@@ -18,7 +21,7 @@ class RetrofitBuilder {
                 .baseUrl(BASE_URL)
                 .build()
 
-            return retrofit.create(GetApisInterface::class.java)
+            return RetrofitObj.retrofit.create(GetApisInterface::class.java)
         }
     }
 }

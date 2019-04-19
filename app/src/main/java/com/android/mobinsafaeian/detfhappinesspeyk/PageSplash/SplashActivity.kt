@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity() {
 
+    //definitions
     private lateinit var zoomInAnimation:Animation
     private lateinit var translateUp:Animation
     private lateinit var utils: Utils

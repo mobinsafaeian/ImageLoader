@@ -18,6 +18,7 @@
         android:layout_height="match_parent"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recycler_view_download_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
@@ -29,6 +30,7 @@
         android:src="@drawable/ic_download"
     />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recycler_view_delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
@@ -42,6 +44,7 @@
         android:src="@drawable/ic_delete"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recycler_view_info_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"

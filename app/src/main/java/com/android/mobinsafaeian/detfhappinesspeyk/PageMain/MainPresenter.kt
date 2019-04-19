@@ -102,7 +102,7 @@ class MainPresenter(private val view:MainViewInterface) : MainPresenterInterface
             observableEmitter.onComplete()
         })
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 { success ->
                     //success
@@ -145,14 +145,10 @@ class MainPresenter(private val view:MainViewInterface) : MainPresenterInterface
             deleteResult.onComplete()
         })
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
             .subscribe(
-                {result -> Log.i("DeleteDataFromDbResult" , result.toString())
-                       Toast.makeText(GlobalApplication.getContext() , "DeleteDataFromDbResult" , Toast.LENGTH_SHORT).show()
-                } ,
-                {error -> Log.i("DeleteDataFromDbError" , error.toString())
-                    Toast.makeText(GlobalApplication.getContext() , "DeleteDataFromDbError" , Toast.LENGTH_SHORT).show()
-                })
+                {result -> Log.i("DeleteDataFromDbResult" , result.toString()) } ,
+                {error -> Log.i("DeleteDataFromDbError" , error.toString()) })
         compositeDisposable.add(disposable)
     }
 

@@ -27,15 +27,19 @@ class NetworkChecking(private val context: Context, private val presenter: MainP
         disposable = hasInternetConnection().subscribe { hasInternet ->
             if (hasInternet){
                 Toast.makeText(context , "successful connection:D" , Toast.LENGTH_SHORT).show()
-                presenter.deleteAllDataFromDatabase()
-                presenter.getIPFromServer()
-                adapter.removeAllItems()
-                presenter.getAllDataFromServer()
+                if(adapter.itemCount == 0){
+                    presenter.deleteAllDataFromDatabase()
+                    presenter.getIPFromServer()
+                    adapter.removeAllItems()
+                    presenter.getAllDataFromServer()
+                }
             }
             else {
                 Toast.makeText(context , "connection problem..." , Toast.LENGTH_SHORT).show()
-                adapter.removeAllItems()
-                presenter.getAllDataFromDatabase()
+                if (adapter.itemCount == 0) {
+                    adapter.removeAllItems()
+                    presenter.getAllDataFromDatabase()
+                }
             }
         }
     }

@@ -142,13 +142,14 @@ class MainPresenter(private val view:MainViewInterface) : MainPresenterInterface
     fun deleteAllDataFromDatabase(){
         val disposable = Observable.create(ObservableOnSubscribe<Any> { deleteResult ->
             imageRepository!!.deleteAllImages()
+            Log.i("deleteImage" , "hi")
             deleteResult.onComplete()
         })
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.newThread())
             .subscribe(
                 {result -> Log.i("DeleteDataFromDbResult" , result.toString()) } ,
-                {error -> Log.i("DeleteDataFromDbError" , error.toString()) })
+                {error -> Log.i("DeleteDataFromDbError" , error.toString()) } , {})
         compositeDisposable.add(disposable)
     }
 
@@ -210,9 +211,11 @@ class MainPresenter(private val view:MainViewInterface) : MainPresenterInterface
         var deleted = false
         if (myFile.exists()){
             val files = myFile.listFiles()
-            for(i in 0 until files.size){
-                if (!files[i].isDirectory){
-                    files[i].delete()
+            if (files != null) {
+                for (i in 0 until files.size) {
+                    if (!files[i].isDirectory) {
+                        files[i].delete()
+                    }
                 }
             }
             deleted = myFile.delete()

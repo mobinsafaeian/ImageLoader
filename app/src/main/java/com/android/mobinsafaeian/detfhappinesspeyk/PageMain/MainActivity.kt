@@ -34,8 +34,6 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
     private lateinit var listItems:ArrayList<MainRecyclerViewListItem>
     private lateinit var intentFilter: IntentFilter
     private lateinit var networkChecking: NetworkChecking
-    private var name:String? = null
-    private var url:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,11 +58,11 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
         intentFilter = IntentFilter()
         listItems = ArrayList()
         main_recycler_view.layoutManager = LinearLayoutManager(this)
-        adapter = MainRecyclerViewAdapter(this , listItems , presenter , this)
+        adapter = MainRecyclerViewAdapter(this , listItems , this)
         main_recycler_view.adapter = adapter
         networkChecking = NetworkChecking(this , presenter , adapter)
         delete_the_folder.setOnClickListener {
-            presenter.deleteImageFolder()
+            getPermissionsAndDeleteTheFolder()
         }
     }
 
@@ -94,6 +92,7 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
      * this function will be called to pass parse data and pass them to adapter
      */
     override fun setImagesFromServer(data: DataResponse) {
+        main_progress_bar.visibility = View.GONE
         listItems.clear()
         for(i in 0 until data.query.allimages.size){
             listItems.add(MainRecyclerViewListItem(data.query.allimages[i].url ,
@@ -139,8 +138,6 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
      *  when user clicks the download button , this function will be called to take permissions and save images
      */
     override fun getPermissionsAndDownloadImage(url:String , name:String) {
-        this.name = name
-        this.url = url
         Dexter.withActivity(this)
             .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener {
@@ -172,13 +169,80 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
                 }
             }).check()
     }
+
     /**
-     * when app is in onPause mode , we should call the unbind() method to dispose disposable variable
+     *  when user clicks the delete button , this function will be called to take permissions and delete the image
+     *  @fileName is the name of the file that should be deleted
      */
-    /*override fun onPause() {
-        super.onPause()
-        presenter.unbind()
-    }*/
+    override fun getPermissionsAndDeleteImage(fileName: String) {
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    presenter.deleteImageFromFile(fileName)
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("permission needed!")
+                        .setMessage("to download the images , you need get the permission")
+                        .setPositiveButton(
+                            "yes"
+                        ) { dialog, which ->
+                            getPermissionsAndDeleteImage(fileName)
+                        }
+                        .setNegativeButton(
+                            "no"
+                        ) { dialog, which ->
+                            dialog.dismiss() }
+                        .create().show()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    Toast.makeText(this@MainActivity , " :(" , Toast.LENGTH_SHORT).show()
+                }
+            }).check()
+    }
+
+    /**
+     *  when user clicks the delete folder fab , this function will be called to take permissions and delete the image
+     */
+    private fun getPermissionsAndDeleteTheFolder(){
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    presenter.deleteImageFolder()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("permission needed!")
+                        .setMessage("to download the images , you need get the permission")
+                        .setPositiveButton(
+                            "yes"
+                        ) { dialog, which ->
+                            getPermissionsAndDeleteTheFolder()
+                        }
+                        .setNegativeButton(
+                            "no"
+                        ) { dialog, which ->
+                            dialog.dismiss() }
+                        .create().show()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    Toast.makeText(this@MainActivity , " :(" , Toast.LENGTH_SHORT).show()
+                }
+            }).check()
+    }
+
 
     // show a simple exit dialog when user clicks on backPressedButton
     override fun onBackPressed() {

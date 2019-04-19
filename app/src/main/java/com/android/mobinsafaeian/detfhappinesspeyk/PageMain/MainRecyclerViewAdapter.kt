@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.android.mobinsafaeian.detfhappinesspeyk.BasePackage.GlobalApplication
 import com.android.mobinsafaeian.detfhappinesspeyk.R
 import com.android.mobinsafaeian.detfhappinesspeyk.model.data.MainRecyclerViewListItem
 import com.squareup.picasso.Picasso
@@ -15,8 +16,8 @@ import kotlinx.android.synthetic.main.main_recycler_view_item.view.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class MainRecyclerViewAdapter(private var context: Context? , private var listItems:ArrayList<MainRecyclerViewListItem> ,
-                              private var presenter: MainPresenter , private var view:RecyclerViewDialogInterface): RecyclerView.Adapter<MainRecyclerViewAdapter.MyViewHolder>() {
+class MainRecyclerViewAdapter(private val context: Context , private var listItems:ArrayList<MainRecyclerViewListItem> ,
+                              private var view:RecyclerViewDialogInterface): RecyclerView.Adapter<MainRecyclerViewAdapter.MyViewHolder>() {
 
     private lateinit var item:MainRecyclerViewListItem
     private var size:Int = 0
@@ -46,7 +47,7 @@ class MainRecyclerViewAdapter(private var context: Context? , private var listIt
         }
 
         holder.deleteButton.setOnClickListener {
-            presenter.deleteImageFromFile(listItems[holder.adapterPosition].name)
+            view.getPermissionsAndDeleteImage(listItems[holder.adapterPosition].name)
         }
 
         holder.infoButton.setOnClickListener {

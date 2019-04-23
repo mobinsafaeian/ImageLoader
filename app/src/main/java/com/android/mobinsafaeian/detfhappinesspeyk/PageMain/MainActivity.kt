@@ -107,6 +107,7 @@ class MainActivity : BaseActivity(), MainViewInterface , RecyclerViewDialogInter
      * this function will be called to pass data that loaded from database and pass them to adapter
      */
     override fun setImagesFromDatabase(data: List<ImageInfo>) {
+        ip_progress_bar.visibility = View.GONE
         listItems.clear()
         for (i in 0 until data.size){
             listItems.add(MainRecyclerViewListItem(data[i].image , data[i].name , data[i].timeStamp))
